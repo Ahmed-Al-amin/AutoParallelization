@@ -1,0 +1,6 @@
+gcc [C file here] -I $env:MSMPI_INC\ -L $env:MSMPI_LIB64\ -lmsmpi -o[exe file name here (default is a.exe)] ---> c files
+
+g++ [C file here] -I $env:MSMPI_INC\ -L $env:MSMPI_LIB64\ -lmsmpi -o[exe file name here (default is a.exe)] ----> c++ files
+
+
+mpiexec -n [M] a.exe 
