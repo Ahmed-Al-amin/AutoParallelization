@@ -1,0 +1,33 @@
+# ninja log v6
+8	955	7874189059234588	AutoParallelization_autogen/timestamp	ee1f880ea692634a
+8	955	7874189059234588	AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+8	955	7874189059234588	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/timestamp	ee1f880ea692634a
+8	955	7874189059234588	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+968	4049	7874189060742255	CMakeFiles/AutoParallelization.dir/main.cpp.obj	68bf4b2f1b5c249c
+964	4108	7874189060692206	CMakeFiles/AutoParallelization.dir/AutoParallelization_autogen/mocs_compilation.cpp.obj	88e483dda66cfbfa
+44	597	7874190577812476	AutoParallelization_autogen/timestamp	ee1f880ea692634a
+44	597	7874190577812476	AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+44	597	7874190577812476	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/timestamp	ee1f880ea692634a
+44	597	7874190577812476	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+598	3126	7874190578617127	CMakeFiles/AutoParallelization.dir/AutoParallelization_autogen/mocs_compilation.cpp.obj	88e483dda66cfbfa
+601	3159	7874190578647130	CMakeFiles/AutoParallelization.dir/main.cpp.obj	68bf4b2f1b5c249c
+604	3860	7874190578684820	CMakeFiles/AutoParallelization.dir/mainwindow.cpp.obj	f9f8eba06195ba50
+3861	4308	7874190611244848	AutoParallelization.exe	cce0f060ba0c34f
+11	202	7874193135639679	AutoParallelization_autogen/timestamp	ee1f880ea692634a
+11	202	7874193135639679	AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+11	202	7874193135639679	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/timestamp	ee1f880ea692634a
+11	202	7874193135639679	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+203	2439	7874193137557993	CMakeFiles/AutoParallelization.dir/mainwindow.cpp.obj	f9f8eba06195ba50
+2439	2655	7874193159910396	AutoParallelization.exe	cce0f060ba0c34f
+78	447	7874197260696081	AutoParallelization_autogen/timestamp	ee1f880ea692634a
+78	447	7874197260696081	AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+78	447	7874197260696081	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/timestamp	ee1f880ea692634a
+78	447	7874197260696081	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+449	4612	7874197264412957	CMakeFiles/AutoParallelization.dir/mainwindow.cpp.obj	f9f8eba06195ba50
+4613	5048	7874197306040954	AutoParallelization.exe	cce0f060ba0c34f
+11	214	7874203580991784	AutoParallelization_autogen/timestamp	ee1f880ea692634a
+11	214	7874203580991784	AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+11	214	7874203580991784	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/timestamp	ee1f880ea692634a
+11	214	7874203580991784	C:/Users/Youssef Moustafa/Documents/AutoParallelization/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/AutoParallelization_autogen/mocs_compilation.cpp	ee1f880ea692634a
+214	2503	7874203583017729	CMakeFiles/AutoParallelization.dir/mainwindow.cpp.obj	f9f8eba06195ba50
+2503	2772	7874203605908877	AutoParallelization.exe	cce0f060ba0c34f
