@@ -27,19 +27,27 @@ string generate_parallel_source(string width, string height, string k) {
 
     void median_filter_kernel(const std::vector<uint8_t>& local_image,
                               std::vector<uint8_t>& local_output,
-                              int width, int rows, int k, int r) {
+                              int width, int rows, int k, int r,
+                              int rank, int rows_per_proc, int global_height) {
         std::vector<uint8_t> window;
         window.reserve(k * k);
         for (int y = 0; y < rows; ++y) {
+            int global_y = rank * rows_per_proc + y;
             for (int x = 0; x < width; ++x) {
                 window.clear();
                 int center_y = y + r;
                 for (int dy = -r; dy <= r; ++dy) {
-                    int ny = center_y + dy;
+                    int local_ny = center_y + dy;
+                    int global_ny = global_y + dy;
+                    
                     for (int dx = -r; dx <= r; ++dx) {
                         int nx = x + dx;
+                        
+                        // Boundary Checks
                         if (nx < 0 || nx >= width) continue;
-                        window.push_back(local_image[ny * width + nx]);
+                        if (global_ny < 0 || global_ny >= global_height) continue;
+
+                        window.push_back(local_image[local_ny * width + nx]);
                     }
                 }
                 std::sort(window.begin(), window.end());
@@ -113,7 +121,7 @@ string generate_parallel_source(string width, string height, string k) {
 
         std::vector<uint8_t> my_output(rows_per_proc * width);
         median_filter_kernel(padded_chunk, my_output, width,
-                             rows_per_proc, k, r);
+                             rows_per_proc, k, r, rank, rows_per_proc, height);
 
         MPI_Gather(my_output.data(), rows_per_proc * width, MPI_UNSIGNED_CHAR,
                    rank == 0 ? final_output.data() : nullptr,

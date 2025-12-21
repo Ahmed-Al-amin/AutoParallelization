@@ -9,19 +9,27 @@
 
     void median_filter_kernel(const std::vector<uint8_t>& local_image,
                               std::vector<uint8_t>& local_output,
-                              int width, int rows, int k, int r) {
+                              int width, int rows, int k, int r,
+                              int rank, int rows_per_proc, int global_height) {
         std::vector<uint8_t> window;
         window.reserve(k * k);
         for (int y = 0; y < rows; ++y) {
+            int global_y = rank * rows_per_proc + y;
             for (int x = 0; x < width; ++x) {
                 window.clear();
                 int center_y = y + r;
                 for (int dy = -r; dy <= r; ++dy) {
-                    int ny = center_y + dy;
+                    int local_ny = center_y + dy;
+                    int global_ny = global_y + dy;
+                    
                     for (int dx = -r; dx <= r; ++dx) {
                         int nx = x + dx;
+                        
+                        // Boundary Checks
                         if (nx < 0 || nx >= width) continue;
-                        window.push_back(local_image[ny * width + nx]);
+                        if (global_ny < 0 || global_ny >= global_height) continue;
+
+                        window.push_back(local_image[local_ny * width + nx]);
                     }
                 }
                 std::sort(window.begin(), window.end());
@@ -36,8 +44,8 @@
         MPI_Comm_rank(MPI_COMM_WORLD, &rank);
         MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-        int width = 4096*2;
-        int height = 4096*2;
+        int width = 4096;
+        int height = 4096;
         int k = 5;
         int r = k / 2;
         int rows_per_proc = height / size;
@@ -67,6 +75,15 @@
 
         MPI_Barrier(MPI_COMM_WORLD);
         double t0 = MPI_Wtime();
+        double t_comm = 0.0;
+        double t_calc = 0.0;
+
+        double t_start = MPI_Wtime();
+        // Scatter
+        MPI_Scatter(full_image.data(), rows_per_proc * width, MPI_UNSIGNED_CHAR,
+                    my_chunk.data(), rows_per_proc * width, MPI_UNSIGNED_CHAR,
+                    0, MPI_COMM_WORLD);
+        t_comm += (MPI_Wtime() - t_start);
 
         std::vector<uint8_t> padded_chunk((rows_per_proc + 2 * r) * width, 0);
         std::copy(my_chunk.begin(), my_chunk.end(),
@@ -75,6 +92,7 @@
         MPI_Request reqs[4];
         int n_reqs = 0;
 
+        t_start = MPI_Wtime();
         if (rank > 0) {
             MPI_Irecv(padded_chunk.data(), r * width, MPI_UNSIGNED_CHAR,
                       rank - 1, 0, MPI_COMM_WORLD, &reqs[n_reqs++]);
@@ -92,19 +110,26 @@
         }
         if (n_reqs > 0)
             MPI_Waitall(n_reqs, reqs, MPI_STATUSES_IGNORE);
+        t_comm += (MPI_Wtime() - t_start);
 
         std::vector<uint8_t> my_output(rows_per_proc * width);
+        
+        t_start = MPI_Wtime();
         median_filter_kernel(padded_chunk, my_output, width,
-                             rows_per_proc, k, r);
+                             rows_per_proc, k, r, rank, rows_per_proc, height);
+        t_calc += (MPI_Wtime() - t_start);
 
+        t_start = MPI_Wtime();
         MPI_Gather(my_output.data(), rows_per_proc * width, MPI_UNSIGNED_CHAR,
                    rank == 0 ? final_output.data() : nullptr,
                    rows_per_proc * width, MPI_UNSIGNED_CHAR,
                    0, MPI_COMM_WORLD);
+        t_comm += (MPI_Wtime() - t_start);
 
         double t1 = MPI_Wtime();
         if (rank == 0) {
             std::cout << "[Parallel] Success! Time: " << (t1 - t0) << " s" << std::endl;
+            std::cout << "[Profile] Comm: " << t_comm << " s, Calc: " << t_calc << " s" << std::endl;
 
             std::ofstream time_file("analysis/parallel_time.txt");
             time_file << (t1 - t0);

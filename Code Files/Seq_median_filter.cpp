@@ -40,8 +40,8 @@ void median_filter_sequential(const std::vector<uint8_t>& image,
 }
 
 int main() {
-    int width  = 4096*2;
-    int height = 4096*2;
+    int width  = 4096;
+    int height = 4096;
     int k      = 5;
 
     std::vector<uint8_t> image(width * height);
