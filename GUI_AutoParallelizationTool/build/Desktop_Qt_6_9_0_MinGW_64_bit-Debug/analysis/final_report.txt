@@ -1,0 +1,36 @@
+STEP 1: CONFIGURATION
+--------------------
+Image Size: 4096 x 4096 pixels
+Total Pixels: 16777216
+Window Size: 5 x 5
+Operations per Pixel: 25
+Total Operations: 419430400
+MPI Processes: 4
+
+STEP 2: PERFORMANCE RESULTS
+----------------------------
+Sequential Time:    25419.60 ms
+MPI Parallel Time:  8694.06 ms
+Speedup:            2.92x
+Efficiency:         73.09%
+Time Reduction:     65.80%
+
+STEP 3: BOTTLENECK ANALYSIS
+---------------------------
+Primary Bottleneck: Sorting operation (std::sort)
+  - Executed 16777216 times
+  - Each sort handles 25 elements
+  - Complexity: O(n log n) per pixel
+  - Percentage of total time: ~77.32% (Allocated from Calculation)
+
+Secondary Factors:
+  - Window Collection & Overhead: ~19.33% of time
+  - MPI Communication: ~3.36% of time
+
+STEP 4: VERIFICATION & FILES
+----------------------
+RMSE: 0  (PERFECT MATCH)
+Generated Files:
+  1. par_generated.cpp - Parallelized version
+  2. scaling_results.csv - Performance data (Console)
+  3. analysis/final_report.txt - This report
